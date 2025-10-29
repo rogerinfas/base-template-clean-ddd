@@ -1,0 +1,45 @@
+// Prisma Schema - Template Clean DDD
+// Dos entidades de ejemplo: User y Product
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ===================================
+// USERS - Sistema de autenticación
+// ===================================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // Password hasheado
+  name      String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+// ===================================
+// PRODUCTS - CRUD básico con paginación
+// ===================================
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Decimal  @db.Decimal(10, 2)
+  stock       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("products")
+}
+
