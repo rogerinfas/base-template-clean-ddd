@@ -8,37 +8,37 @@ import { InvalidValueObjectException } from '../exceptions/domain.exceptions';
  */
 export class Email {
     private static readonly EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    private readonly value: string;
+    readonly #value: string;
 
     constructor(email: string) {
         this.validate(email);
-        this.value = email.toLowerCase().trim();
+        this.#value = email.toLowerCase().trim();
     }
 
     private validate(email: string): void {
-        if (!email || email.trim().length === 0) {
-            throw new InvalidValueObjectException('El email no puede estar vacío');
-        }
-
         if (!Email.EMAIL_REGEX.test(email)) {
             throw new InvalidValueObjectException('Formato de email inválido');
         }
 
         if (email.length > 254) {
-            throw new InvalidValueObjectException('Email demasiado largo (máx. 254 caracteres)');
+            throw new InvalidValueObjectException('Email demasiado largo');
         }
     }
 
-    getValue(): string {
-        return this.value;
+    get value(): string {
+        return this.#value;
     }
 
-    equals(other: Email): boolean {
-        return this.value === other.getValue();
+    getValue(): string {
+        return this.#value;
+    }
+
+    equals(email: Email): boolean {
+        return this.#value === email.value;
     }
 
     toString(): string {
-        return this.value;
+        return this.#value;
     }
 }
 

@@ -11,19 +11,106 @@ datasource db {
 }
 
 // ===================================
+// ENUMERACIONES
+// ===================================
+
+enum IdDocumentType {
+  RUC
+  DNI
+  FOREIGNER_ID
+  PASSPORT
+  OTHER
+}
+
+// ===================================
 // USERS - Sistema de autenticación
 // ===================================
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String   // Password hasheado
-  name      String
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  phone          String
+  address        String
+  email          String         @unique
+  emailVerified  Boolean        @default(false) @map("email_verified")
+  name           String
+  lastName       String
+  idDocumentType IdDocumentType @default(DNI)
+  idNumber       String         @unique // Número de documento (DNI, RUC, etc.)
+  image          String? // Opcional
+  post           String // Cargo del usuario
+  lastLoginAt    DateTime?      @map("last_login_at")
+
+  //boilerplate
+  id        String    @id @default(uuid())
+  isActive  Boolean   @default(true) @map("is_active")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // Relaciones con RBAC
+  roles UserRole[]
 
   @@map("users")
+}
+
+// ===================================
+// RBAC: PERMISOS DEL SISTEMA
+// ===================================
+model Permission {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  description String
+  resource    String
+  action      String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  roles       RolePermission[]
+}
+
+// ===================================
+// RBAC: ROLES DEL SISTEMA
+// ===================================
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isActive    Boolean  @default(true)
+
+  // Campos para control de seed vs cambios de usuario
+  userModified        Boolean @default(false) @map("user_modified")
+  seedPermissionsHash String? @map("seed_permissions_hash")
+  seedRoleKey         String? @unique @map("seed_role_key")
+
+  users       UserRole[]
+  permissions RolePermission[]
+}
+
+// ===================================
+// RBAC: RELACIONES MANY-TO-MANY
+// ===================================
+
+// Usuario ↔ Rol (un usuario puede tener múltiples roles)
+model UserRole {
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId    String
+  createdAt DateTime @default(now())
+
+  @@id([userId, roleId])
+}
+
+// Rol ↔ Permiso (un rol puede tener múltiples permisos)
+model RolePermission {
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId       String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permissionId String
+  createdAt    DateTime   @default(now())
+
+  @@id([roleId, permissionId])
 }
 
 // ===================================

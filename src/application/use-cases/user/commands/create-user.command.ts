@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { User } from '@domain/entities/user.entity';
+import { User } from '@domain/entities/user/user.entity';
 import { Email } from '@domain/value-objects/email.vo';
 import { IUserRepository, USER_REPOSITORY } from '@domain/repositories/user.repository.interface';
 import { DuplicateEntityException } from '@domain/exceptions/domain.exceptions';

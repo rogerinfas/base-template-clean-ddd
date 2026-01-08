@@ -1,4 +1,4 @@
-import { User } from '../entities/user.entity';
+import { User } from '../entities/user/user.entity';
 
 /**
  * Interface de Repositorio: User
@@ -11,9 +11,9 @@ import { User } from '../entities/user.entity';
  */
 export interface IUserRepository {
     // Búsquedas
-    findById(id: string): Promise<User | null>;
-    findByEmail(email: string): Promise<User | null>;
-    findAll(): Promise<User[]>;
+    findById(id: string, includeRoles?: boolean): Promise<User | null>;
+    findByEmail(email: string, includeRoles?: boolean): Promise<User | null>;
+    findAll(includeRoles?: boolean): Promise<User[]>;
 
     // Escritura
     create(user: User): Promise<User>;
@@ -22,6 +22,7 @@ export interface IUserRepository {
 
     // Verificaciones
     existsByEmail(email: string): Promise<boolean>;
+    existsByIdNumber(idNumber: string): Promise<boolean>;
 }
 
 // Token para inyección de dependencias
