@@ -62,3 +62,4 @@ export interface IRoleRepository {
 // Token para inyección de dependencias
 export const ROLE_REPOSITORY = Symbol('ROLE_REPOSITORY');
 
+

@@ -85,3 +85,4 @@ export class RoleMapper {
  */
 export type { PrismaRoleBase, PrismaRoleEntity, PrismaRoleWithPermissions };
 
+

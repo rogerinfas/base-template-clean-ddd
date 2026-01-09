@@ -58,3 +58,4 @@ export interface IPermissionRepository {
 // Token para inyección de dependencias
 export const PERMISSION_REPOSITORY = Symbol('PERMISSION_REPOSITORY');
 
+
