@@ -87,3 +87,5 @@ export type { PrismaRoleBase, PrismaRoleEntity, PrismaRoleWithPermissions };
 
 
 
+
+

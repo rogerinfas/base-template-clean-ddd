@@ -52,3 +52,5 @@ export class UserCannotRemoveLastRoleException extends UserDomainException {
 
 
 
+
+
