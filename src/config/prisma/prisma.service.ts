@@ -1,16 +1,8 @@
 import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
 
-/**
- * PrismaService
- * 
- * Wrapper del PrismaClient que se conecta/desconecta automáticamente.
- * Configurado con logging mínimo para reducir ruido.
- */
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
-    private readonly logger = new Logger(PrismaService.name);
-
     constructor() {
         // Solo logs de errores y warnings - sin queries para reducir ruido
         super({
@@ -20,12 +12,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
     async onModuleInit() {
         await this.$connect();
-        this.logger.log('✅ Database connected');
+        // Query logging desactivado para reducir ruido
+        // this.setupQueryLogging();
     }
 
     async onModuleDestroy() {
         await this.$disconnect();
-        this.logger.log('👋 Database disconnected');
     }
 }
-

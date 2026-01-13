@@ -55,8 +55,7 @@ export interface IPermissionRepository {
     upsertByName(permission: Permission): Promise<Permission>;
 }
 
-// Token para inyección de dependencias
-export const PERMISSION_REPOSITORY = Symbol('PERMISSION_REPOSITORY');
+// Token para inyección de dependencias - usar el de shared/constants
 
 
 

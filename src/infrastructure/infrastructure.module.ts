@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from '@config/database/prisma.service';
+import { PrismaModule } from '@config/database/prisma.module';
 import { UserRepository } from './persistence/prisma/repositories/user.repository';
 import { ProductRepository } from './persistence/prisma/repositories/product.repository';
-import { USER_REPOSITORY, PRODUCT_REPOSITORY } from '@shared/constants/tokens';
+import { RoleRepository } from './persistence/prisma/repositories/role.repository';
+import { PermissionRepository } from './persistence/prisma/repositories/permission.repository';
+import { USER_REPOSITORY, PRODUCT_REPOSITORY, ROLE_REPOSITORY, PERMISSION_REPOSITORY } from '@shared/constants/tokens';
 
 /**
  * Infrastructure Module
@@ -11,8 +13,8 @@ import { USER_REPOSITORY, PRODUCT_REPOSITORY } from '@shared/constants/tokens';
  * Aquí se hace el binding entre interfaces y implementaciones.
  */
 @Module({
+    imports: [PrismaModule],
     providers: [
-        PrismaService,
         {
             provide: USER_REPOSITORY,
             useClass: UserRepository,
@@ -21,8 +23,16 @@ import { USER_REPOSITORY, PRODUCT_REPOSITORY } from '@shared/constants/tokens';
             provide: PRODUCT_REPOSITORY,
             useClass: ProductRepository,
         },
+        {
+            provide: ROLE_REPOSITORY,
+            useClass: RoleRepository,
+        },
+        {
+            provide: PERMISSION_REPOSITORY,
+            useClass: PermissionRepository,
+        },
     ],
-    exports: [USER_REPOSITORY, PRODUCT_REPOSITORY, PrismaService],
+    exports: [USER_REPOSITORY, PRODUCT_REPOSITORY, ROLE_REPOSITORY, PERMISSION_REPOSITORY],
 })
 export class InfrastructureModule {}
 

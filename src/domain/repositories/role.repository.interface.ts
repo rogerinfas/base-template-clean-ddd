@@ -59,8 +59,7 @@ export interface IRoleRepository {
     existsByName(name: string): Promise<boolean>;
 }
 
-// Token para inyección de dependencias
-export const ROLE_REPOSITORY = Symbol('ROLE_REPOSITORY');
+// Token para inyección de dependencias - usar el de shared/constants
 
 
 

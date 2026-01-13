@@ -4,7 +4,9 @@
  * Centralizados para evitar duplicación
  */
 
-// Importar los tokens de los repositorios
-export { USER_REPOSITORY } from '@domain/repositories/user.repository.interface';
-export { PRODUCT_REPOSITORY } from '@domain/repositories/product.repository.interface';
+// Tokens de repositorios
+export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
+export const PRODUCT_REPOSITORY = Symbol('PRODUCT_REPOSITORY');
+export const ROLE_REPOSITORY = Symbol('ROLE_REPOSITORY');
+export const PERMISSION_REPOSITORY = Symbol('PERMISSION_REPOSITORY');
 
