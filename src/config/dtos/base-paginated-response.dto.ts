@@ -3,25 +3,25 @@ import { PaginatedResult, PaginationMetadata } from '@config/interfaces/base.int
 
 export abstract class PaginationMetadataDto implements PaginationMetadata {
     @ApiProperty({ type: Number, description: 'Total number of items' })
-    total: number;
+    total!: number;
 
     @ApiProperty({ type: Number, description: 'Current page number' })
-    page: number;
+    page! number;
 
     @ApiProperty({ type: Number, description: 'Number of items per page' })
-    pageSize: number;
+    pageSize! number;
 
     @ApiProperty({ type: Number, description: 'Total number of pages' })
-    totalPages: number;
+    totalPages!: number;
 
     @ApiProperty({ type: Boolean, description: 'Whether there is a next page' })
-    hasNext: boolean;
+    hasNext!: boolean;
 
     @ApiProperty({
         type: Boolean,
         description: 'Whether there is a previous page',
     })
-    hasPrevious: boolean;
+    hasPrevious!: boolean;
 }
 
 /**

@@ -8,7 +8,7 @@ export class ErrorResponseDto {
         description: 'Código de estado HTTP',
         example: 400,
     })
-    statusCode!: number;
+    statusCode! number;
 
     @ApiProperty({
         description: 'Mensaje de error',
@@ -20,19 +20,19 @@ export class ErrorResponseDto {
         description: 'Tipo de error',
         example: 'BadRequestException',
     })
-    error!: string;
+    error! string;
 
     @ApiProperty({
         description: 'Timestamp cuando ocurrió el error',
         example: '2024-01-15T10:30:45.123Z',
     })
-    timestamp!: string;
+    timestamp! string;
 
     @ApiProperty({
         description: 'Ruta de la API donde ocurrió el error',
         example: '/api/v1/user',
     })
-    path!: string;
+    path! string;
 
     @ApiPropertyOptional({
         description: 'Detalles adicionales del error (solo en desarrollo)',

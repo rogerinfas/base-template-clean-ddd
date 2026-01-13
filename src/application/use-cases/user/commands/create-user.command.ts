@@ -1,9 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { User } from '@domain/entities/user/user.entity';
 import { Email } from '@domain/value-objects/email.vo';
-import { IUserRepository, USER_REPOSITORY } from '@domain/repositories/user.repository.interface';
+import { IdDocumentType } from '@domain/value-objects/id-document-type.vo';
+import { IdDocumentTypeEnum } from '@domain/types/id-document-types.type';
+import { USER_REPOSITORY } from '@domain/repositories/user.repository.interface';
+import type { IUserRepository } from '@domain/repositories/user.repository.interface';
 import { DuplicateEntityException } from '@domain/exceptions/domain.exceptions';
-import * as bcrypt from 'bcrypt';
 
 /**
  * Command: CreateUser
@@ -11,17 +13,22 @@ import * as bcrypt from 'bcrypt';
  * Caso de uso para crear un nuevo usuario.
  * Sigue el patrón CQRS (Command).
  * 
- * Responsabilidades:
- * - Validar que el email no exista
- * - Hashear el password
- * - Crear la entidad User
- * - Persistir usando el repositorio
+ * NOTA: Para crear usuarios con contraseña, usa Better Auth directamente:
+ * auth.api.signUpEmail() - Better Auth maneja las contraseñas en el modelo Account
+ * 
+ * Este comando es para crear usuarios sin contraseña (útil para migraciones, seeds, etc.)
  */
 
 export interface CreateUserDto {
     email: string;
-    password: string;
     name: string;
+    lastName: string;
+    idDocumentType?: IdDocumentTypeEnum;
+    idNumber: string;
+    post: string;
+    phone: string;
+    address: string;
+    isActive?: boolean;
 }
 
 @Injectable()
@@ -40,18 +47,23 @@ export class CreateUserCommand {
 
         // 2. Crear Value Object Email (con validación automática)
         const email = new Email(dto.email);
+        const idDocumentType = new IdDocumentType(dto.idDocumentType || IdDocumentTypeEnum.DNI);
 
-        // 3. Hashear password
-        const hashedPassword = await bcrypt.hash(dto.password, 10);
-
-        // 4. Crear entidad User
+        // 3. Crear entidad User
         const user = User.create({
             email,
-            password: hashedPassword,
             name: dto.name,
+            lastName: dto.lastName,
+            idDocumentType,
+            idNumber: dto.idNumber,
+            post: dto.post,
+            phone: dto.phone,
+            address: dto.address,
+            emailVerified: false,
+            isActive: dto.isActive ?? true,
         });
 
-        // 5. Persistir
+        // 4. Persistir
         return await this.userRepository.create(user);
     }
 }

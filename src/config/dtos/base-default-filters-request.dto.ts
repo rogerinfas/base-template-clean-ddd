@@ -11,7 +11,7 @@ export class BaseDefaultFiltersDto {
     @TransformStringToBoolean()
     @IsOptional()
     @IsBoolean()
-    isActive?: boolean;
+    isActive?!: boolean;
 
     @ApiPropertyOptional({
         description:
@@ -20,7 +20,7 @@ export class BaseDefaultFiltersDto {
     })
     @IsOptional()
     @IsDate()
-    dateFrom?: Date;
+    dateFrom?!: Date;
 
     @IsOptional()
     @IsDate()
@@ -29,7 +29,7 @@ export class BaseDefaultFiltersDto {
             'Fecha de fin para filtrar por cualquier campo de fecha (ISO 8601). Genérico: cada controlador decide qué campo de fecha usar (createdAt, updatedAt, deliveryDate, etc.)',
         example: '2025-08-03T04:59:59.999Z',
     })
-    dateTo?: Date;
+    dateTo?!: Date;
 
     @IsOptional()
     @TransformStringToArray()

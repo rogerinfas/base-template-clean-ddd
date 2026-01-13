@@ -16,5 +16,5 @@ export class BulkIdsDto {
     @IsArray()
     @ArrayNotEmpty({ message: 'El array de IDs no puede estar vacío' })
     @IsUUID('all', { each: true, message: 'Cada ID debe ser un UUID válido' })
-    ids: string[];
+    ids!: string[];
 }

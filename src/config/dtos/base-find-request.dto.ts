@@ -14,7 +14,7 @@ export class BaseFindRequestDto {
     @IsUUID('all', {
         message: 'El ID debe ser un UUID válido',
     })
-    id?: string;
+    id?!: string;
 
     @ApiProperty({
         description: 'Search by Ids',

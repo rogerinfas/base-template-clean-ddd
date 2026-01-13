@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Product } from '@domain/entities/product.entity';
 import { Price } from '@domain/value-objects/price.vo';
-import { IProductRepository, PRODUCT_REPOSITORY } from '@domain/repositories/product.repository.interface';
+import { PRODUCT_REPOSITORY } from '@domain/repositories/product.repository.interface';
+import type { IProductRepository } from '@domain/repositories/product.repository.interface';
 import { EntityNotFoundException } from '@domain/exceptions/domain.exceptions';
 
 /**

@@ -10,5 +10,5 @@ export class ReactivateManyDto {
     @IsArray()
     @ArrayNotEmpty()
     @IsString({ each: true })
-    ids: string[];
+    ids!: string[];
 }

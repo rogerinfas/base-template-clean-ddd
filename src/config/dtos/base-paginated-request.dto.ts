@@ -16,7 +16,7 @@ export class BasePaginatedRequestDto extends BaseDefaultFiltersDto {
     @Type(() => Number)
     @IsInt()
     @Min(1)
-    page: number;
+    page! number;
 
     @ApiProperty({
         description: 'Number of items per page',
@@ -31,7 +31,7 @@ export class BasePaginatedRequestDto extends BaseDefaultFiltersDto {
     @IsInt()
     @Min(1)
     @Max(100)
-    size: number;
+    size! number;
 }
 
 export class BasePaginatedRequestDtoLegacy {
@@ -46,7 +46,7 @@ export class BasePaginatedRequestDtoLegacy {
     @Type(() => Number)
     @IsInt()
     @Min(1)
-    page: number;
+    page! number;
 
     @ApiProperty({
         description: 'Number of items per page',
@@ -61,7 +61,7 @@ export class BasePaginatedRequestDtoLegacy {
     @IsInt()
     @Min(1)
     @Max(100)
-    size: number;
+    size! number;
 
     @ApiPropertyOptional({
         description: 'Search',
@@ -70,17 +70,17 @@ export class BasePaginatedRequestDtoLegacy {
     })
     @IsOptional()
     @Type(() => String)
-    search?: string;
+    search?!: string;
 
     @IsOptional()
     @Transform(({ value }: { value: string }) => (value ? value === 'true' : undefined))
     @IsBoolean()
-    isActive?: string;
+    isActive?!: string;
 
     @IsOptional()
     @TransformStringToBoolean()
     @IsBoolean()
-    includeInactive?: boolean;
+    includeInactive?!: boolean;
 
     @IsOptional()
     @IsDateString()
@@ -90,7 +90,7 @@ export class BasePaginatedRequestDtoLegacy {
         example: '2024-01-01',
         type: String,
     })
-    dateFrom?: string;
+    dateFrom?!: string;
 
     @IsOptional()
     @IsDateString()
@@ -100,7 +100,7 @@ export class BasePaginatedRequestDtoLegacy {
         example: '2024-12-31',
         type: String,
     })
-    dateTo?: string;
+    dateTo?!: string;
 
     @IsOptional()
     @IsString({ each: true })

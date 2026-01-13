@@ -11,7 +11,7 @@ export class BasePaginatedSearchRequestDto extends BasePaginatedRequestDto {
         required: false,
     })
     @IsOptional()
-    declare search?: string;
+    declare search?!: string;
 
     @ApiProperty({
         description: 'Search by Id',
@@ -21,7 +21,7 @@ export class BasePaginatedSearchRequestDto extends BasePaginatedRequestDto {
     @IsOptional()
     @IsString()
     @IsUUID()
-    id?: string;
+    id?!: string;
 
     @ApiProperty({
         description: 'Search by Ids',
@@ -40,7 +40,7 @@ export class BasePaginatedSearchRequestDtoLegacy extends BasePaginatedRequestDto
         required: false,
     })
     @IsOptional()
-    declare search?: string;
+    declare search?!: string;
 
     @ApiProperty({
         description: 'Search by Id',
@@ -50,7 +50,7 @@ export class BasePaginatedSearchRequestDtoLegacy extends BasePaginatedRequestDto
     @IsOptional()
     @IsString()
     @IsUUID()
-    id?: string;
+    id?!: string;
 
     @ApiProperty({
         description: 'Search by Ids',

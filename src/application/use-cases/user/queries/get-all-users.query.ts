@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { User } from '@domain/entities/user/user.entity';
-import { IUserRepository, USER_REPOSITORY } from '@domain/repositories/user.repository.interface';
+import { USER_REPOSITORY } from '@domain/repositories/user.repository.interface';
+import type { IUserRepository } from '@domain/repositories/user.repository.interface';
 
 /**
  * Query: GetAllUsers

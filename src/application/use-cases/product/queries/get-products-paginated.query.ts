@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Product } from '@domain/entities/product.entity';
 import {
-    IProductRepository,
     PRODUCT_REPOSITORY,
     PaginatedResult,
     PaginationParams,
 } from '@domain/repositories/product.repository.interface';
+import type { IProductRepository } from '@domain/repositories/product.repository.interface';
 
 /**
  * Query: GetProductsPaginated

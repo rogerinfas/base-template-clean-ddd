@@ -5,7 +5,7 @@ import {
     PaginationParams,
 } from '@domain/repositories/product.repository.interface';
 import { Product } from '@domain/entities/product.entity';
-import { PrismaService } from '@config/database/prisma.service';
+import { PrismaService } from '@config/prisma/prisma.service';
 import { ProductMapper } from '../mappers/product.mapper';
 
 /**
