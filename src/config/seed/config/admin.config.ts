@@ -29,5 +29,5 @@ export const ADMIN_CONFIG: AdminConfig = {
     post: 'Administrador',
     phone: '+51998050028',
     address: 'Dirección del sistema',
-    roleNames: ['Administrador'], // Roles a asignar al admin
+    roleNames: ['Super Administrador'], // Roles a asignar al admin (Super Admin por defecto)
 };

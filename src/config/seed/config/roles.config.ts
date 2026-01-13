@@ -57,6 +57,14 @@ function generateAllAdminPermissions(): string[] {
  */
 export const ROLES_CONFIG: RoleConfig[] = [
     {
+        name: 'Super Administrador',
+        description: 'Super Administrador con acceso completo y privilegios máximos al sistema',
+        isDefault: false,
+        // Generar automáticamente todos los permisos wildcard para todos los recursos
+        // Esto garantiza que nunca falte ningún permiso, incluso si se agregan nuevos recursos
+        permissions: generateAllAdminPermissions(),
+    },
+    {
         name: 'Administrador',
         description: 'Administrador con acceso completo al sistema',
         isDefault: true,
@@ -65,13 +73,19 @@ export const ROLES_CONFIG: RoleConfig[] = [
         permissions: generateAllAdminPermissions(),
     },
     {
-        name: 'Operador',
-        description: 'Operador con permisos limitados para operaciones básicas',
+        name: 'Asistente Administrativo',
+        description: 'Asistente administrativo con permisos limitados para operaciones de apoyo al administrador',
         isDefault: false,
         permissions: [
-            // Solo lectura de usuarios y roles
+            // Lectura completa de usuarios y roles
             'user:read',
             'role:read',
+            // Permisos limitados de gestión de usuarios (sin eliminar)
+            'user:create',
+            'user:update',
+            'user:activate',
+            'user:deactivate',
+            // Sin permisos de eliminación ni gestión de roles
         ],
     },
 ];
