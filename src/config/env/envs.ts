@@ -153,14 +153,14 @@ type GeneralEnvVars = {
     BUSINESS_NAME: string;
     ADMIN_EMAIL: string;
     ADMIN_PASSWORD: string;
-    API_PERU_DEV_URL: string;
-    API_PERU_TOKEN: string;
-    R2_ACCOUNT_ID: string;
-    R2_ACCESS_KEY_ID: string;
-    R2_SECRET_ACCESS_KEY: string;
-    R2_BUCKET_NAME: string;
-    R2_REGION: string;
-    EXCEL_COMPANY_NAME: string;
+    API_PERU_DEV_URL?: string;
+    API_PERU_TOKEN?: string;
+    R2_ACCOUNT_ID?: string;
+    R2_ACCESS_KEY_ID?: string;
+    R2_SECRET_ACCESS_KEY?: string;
+    R2_BUCKET_NAME?: string;
+    R2_REGION?: string;
+    EXCEL_COMPANY_NAME?: string;
     EXCEL_LOGO_PATH?: string;
 };
 
@@ -186,17 +186,17 @@ const envsSchema = z
         MAIL_FROM: z.email().optional(),
         MAIL_SECURE: z.string().optional(),
         MAIL_TEMPLATES_DIR: z.string().optional(),
-        BUSINESS_NAME: z.string().default('Work Wear Industrial E.I.R.L.'),
+        BUSINESS_NAME: z.string().default('Base Template Clean DDD'),
         ADMIN_EMAIL: z.email(),
         ADMIN_PASSWORD: z.string(),
-        API_PERU_DEV_URL: z.string().min(1, 'API_PERU_DEV_URL is required').default('https://apiperu.dev/api/'),
-        API_PERU_TOKEN: z.string().min(1, 'API_PERU_TOKEN is required'),
-        R2_ACCOUNT_ID: z.string().min(1, 'R2_ACCOUNT_ID is required'),
-        R2_ACCESS_KEY_ID: z.string().min(1, 'R2_ACCESS_KEY_ID is required'),
-        R2_SECRET_ACCESS_KEY: z.string().min(1, 'R2_SECRET_ACCESS_KEY is required'),
-        R2_BUCKET_NAME: z.string().min(1, 'R2_BUCKET_NAME is required'),
-        R2_REGION: z.string().default('auto'),
-        EXCEL_COMPANY_NAME: z.string().min(1, 'EXCEL_COMPANY_NAME is required'),
+        API_PERU_DEV_URL: z.string().optional().default('https://apiperu.dev/api/'),
+        API_PERU_TOKEN: z.string().optional().default(''),
+        R2_ACCOUNT_ID: z.string().optional().default(''),
+        R2_ACCESS_KEY_ID: z.string().optional().default(''),
+        R2_SECRET_ACCESS_KEY: z.string().optional().default(''),
+        R2_BUCKET_NAME: z.string().optional().default(''),
+        R2_REGION: z.string().optional().default('auto'),
+        EXCEL_COMPANY_NAME: z.string().optional().default('Base Template'),
         EXCEL_LOGO_PATH: z.string().optional(),
     })
     .loose() satisfies z.ZodType<GeneralEnvVars>;
@@ -232,13 +232,13 @@ export const generalEnvs: GeneralEnvVars = {
     BUSINESS_NAME: envVars.BUSINESS_NAME,
     ADMIN_EMAIL: envVars.ADMIN_EMAIL,
     ADMIN_PASSWORD: envVars.ADMIN_PASSWORD,
-    API_PERU_DEV_URL: envVars.API_PERU_DEV_URL,
-    API_PERU_TOKEN: envVars.API_PERU_TOKEN,
-    R2_ACCOUNT_ID: envVars.R2_ACCOUNT_ID,
-    R2_ACCESS_KEY_ID: envVars.R2_ACCESS_KEY_ID,
-    R2_SECRET_ACCESS_KEY: envVars.R2_SECRET_ACCESS_KEY,
-    R2_BUCKET_NAME: envVars.R2_BUCKET_NAME,
-    R2_REGION: envVars.R2_REGION,
-    EXCEL_COMPANY_NAME: envVars.EXCEL_COMPANY_NAME,
+    API_PERU_DEV_URL: envVars.API_PERU_DEV_URL || '',
+    API_PERU_TOKEN: envVars.API_PERU_TOKEN || '',
+    R2_ACCOUNT_ID: envVars.R2_ACCOUNT_ID || '',
+    R2_ACCESS_KEY_ID: envVars.R2_ACCESS_KEY_ID || '',
+    R2_SECRET_ACCESS_KEY: envVars.R2_SECRET_ACCESS_KEY || '',
+    R2_BUCKET_NAME: envVars.R2_BUCKET_NAME || '',
+    R2_REGION: envVars.R2_REGION || 'auto',
+    EXCEL_COMPANY_NAME: envVars.EXCEL_COMPANY_NAME || 'Base Template',
     EXCEL_LOGO_PATH: envVars.EXCEL_LOGO_PATH,
 } as const;
