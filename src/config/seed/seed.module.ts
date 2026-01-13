@@ -1,13 +1,9 @@
-import { BusinessModule } from '@app/business';
 import { Module } from '@nestjs/common';
-import { UseCasesModule } from '@application/use-cases/use-cases.module';
-import { RepositoriesModule } from '@domain/repositories/repositories.module';
+import { ApplicationModule } from '@application/application.module';
+import { InfrastructureModule } from '@infrastructure/infrastructure.module';
 import { AdminSeedService } from './services/admin-seed.service';
-import { BusinessSeedService } from './services/business-seed.service';
 import { PermissionSeedService } from './services/permission-seed.service';
 import { RoleSeedService } from './services/role-seed.service';
-import { SizeSeedService } from './services/size-seed.service';
-import { UnitSeedService } from './services/unit-seed.service';
 import { SystemInitializationService } from './system-initialization.service';
 
 /**
@@ -27,24 +23,19 @@ import { SystemInitializationService } from './system-initialization.service';
  * 3. Admin: Se crea el usuario administrador definido en admin.config.ts (si está configurado en .env)
  *
  * Dependencias:
- * - RepositoriesModule: Para acceder a repositorios de permisos y roles
- * - UseCasesModule: Para usar comandos (CreateRoleCommand, RegisterUserCommand)
- * - BusinessModule: Para acceder al repositorio de Business (BUSINESS_REPOSITORY)
+ * - InfrastructureModule: Para acceder a repositorios de permisos y roles
+ * - ApplicationModule: Para usar comandos (CreateRoleCommand, RegisterUserCommand)
  */
 @Module({
     imports: [
-        RepositoriesModule, // Para acceder a repositorios
-        UseCasesModule, // Para usar comandos (CreateRoleCommand, RegisterUserCommand)
-        BusinessModule, // Para acceder al repositorio de Business (BUSINESS_REPOSITORY)
+        InfrastructureModule, // Para acceder a repositorios
+        ApplicationModule, // Para usar comandos
     ],
     providers: [
         SystemInitializationService,
         PermissionSeedService,
         RoleSeedService,
         AdminSeedService,
-        SizeSeedService,
-        UnitSeedService,
-        BusinessSeedService,
     ],
 })
 export class SeedModule {}

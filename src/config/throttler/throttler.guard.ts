@@ -1,4 +1,4 @@
-import { User } from '@domain/entities/better-auth/user.entity';
+import { User } from '@domain/entities/user/user.entity';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';

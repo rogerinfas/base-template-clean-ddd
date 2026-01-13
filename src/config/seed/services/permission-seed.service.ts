@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Permission } from '@domain/entities/role/permission.entity';
-import type { IPermissionRepository } from '@domain/repositories/permission/permission.repository.interface';
+import type { IPermissionRepository } from '@domain/repositories/permission.repository.interface';
 import { ActionType, ResourceAction } from '@domain/value-objects/resource-action.vo';
 import { PERMISSION_REPOSITORY } from '@shared/constants/tokens';
 import { PermissionConfig } from '../config/permissions.config';

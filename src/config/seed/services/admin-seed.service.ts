@@ -1,13 +1,13 @@
 import { IdDocumentTypeEnum } from '@domain/types/id-document-types.type';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { RegisterUserCommand } from '@application/use-cases/user/commands/register-user.command';
-import { User } from '@domain/entities/better-auth/user.entity';
-import type { IRoleRepository } from '@domain/repositories/role/role.repository.interface';
-import type { IUserRepository } from '@domain/repositories/user/user.repository.interface';
-import { CreateUserRequest } from '@presentation/controllers/user/dtos/create-user.request';
+import { User } from '@domain/entities/user/user.entity';
+import type { IRoleRepository } from '@domain/repositories/role.repository.interface';
+import type { IUserRepository } from '@domain/repositories/user.repository.interface';
 import { ROLE_REPOSITORY, USER_REPOSITORY } from '@shared/constants/tokens';
 import { AdminConfig } from '../config/admin.config';
+import { IdDocumentType } from '@domain/value-objects/id-document-type.vo';
+import { Email } from '@domain/value-objects/email.vo';
+import * as bcrypt from 'bcrypt';
 
 /**
  * Servicio de Seed de Usuario Administrador
@@ -35,7 +35,6 @@ export class AdminSeedService {
     private readonly logger = new Logger(AdminSeedService.name);
 
     constructor(
-        private readonly commandBus: CommandBus,
         @Inject(ROLE_REPOSITORY)
         private readonly roleRepository: IRoleRepository,
         @Inject(USER_REPOSITORY)
@@ -88,24 +87,37 @@ export class AdminSeedService {
                 );
             }
 
-            // Crear DTO para el comando
-            const registerDto: CreateUserRequest = {
+            // Hash de password
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            // Obtener roles completos
+            const roles = await Promise.all(
+                roleIds.map(async (roleId) => {
+                    const role = await this.roleRepository.findById(roleId);
+                    if (!role) {
+                        throw new Error(`Rol con ID ${roleId} no encontrado`);
+                    }
+                    return role;
+                }),
+            );
+
+            // Crear usuario directamente
+            const user = User.create({
                 name: adminConfig.name,
                 lastName: adminConfig.lastName,
-                email,
-                password,
-                idDocumentType: adminConfig.idDocumentType as IdDocumentTypeEnum,
+                idDocumentType: new IdDocumentType(adminConfig.idDocumentType as IdDocumentTypeEnum),
                 idNumber: adminConfig.idNumber,
                 post: adminConfig.post,
+                email: new Email(email),
                 phone: adminConfig.phone,
                 address: adminConfig.address,
+                emailVerified: true,
                 isActive: true,
-                roleIds,
-            };
+                roles: roles,
+            });
 
-            // Crear usuario usando el comando existente
-            const command = new RegisterUserCommand(registerDto);
-            await this.commandBus.execute(command);
+            // Guardar usuario
+            await this.userRepository.create(user);
 
             this.logger.log('✅ Usuario administrador creado correctamente');
         } catch (error) {
@@ -141,13 +153,11 @@ export class AdminSeedService {
 
             // Buscar usuarios que tengan al menos uno de los roles del admin
             // (normalmente el admin tiene solo el rol "Administrador", pero por si acaso)
-            for (const roleId of roleIds) {
-                const usersWithRole = await this.userRepository.findUsersByRoleId(roleId);
-
-                // Si encontramos usuarios con el rol, retornar el primero
-                // (normalmente solo hay un admin)
-                if (usersWithRole.length > 0) {
-                    return usersWithRole[0];
+            const allUsers = await this.userRepository.findAll(true);
+            for (const user of allUsers) {
+                const hasAdminRole = user.roles.some((role) => roleIds.includes(role.id as string));
+                if (hasAdminRole) {
+                    return user;
                 }
             }
 
@@ -168,7 +178,7 @@ export class AdminSeedService {
         const roleIds: string[] = [];
 
         // Cargar todos los roles una sola vez (optimización)
-        const allRoles = await this.roleRepository.findMany({});
+        const allRoles = await this.roleRepository.findAll();
         const rolesMap = new Map(allRoles.map((role) => [role.name, role]));
 
         for (const roleName of roleNames) {

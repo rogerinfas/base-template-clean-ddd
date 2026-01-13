@@ -2,8 +2,8 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import * as crypto from 'crypto';
 import { Permission } from '@domain/entities/role/permission.entity';
 import { Role } from '@domain/entities/role/role.entity';
-import type { IPermissionRepository } from '@domain/repositories/permission/permission.repository.interface';
-import type { IRoleRepository } from '@domain/repositories/role/role.repository.interface';
+import type { IPermissionRepository } from '@domain/repositories/permission.repository.interface';
+import type { IRoleRepository } from '@domain/repositories/role.repository.interface';
 import { PERMISSION_REPOSITORY, ROLE_REPOSITORY } from '@shared/constants/tokens';
 import { RoleConfig } from '../config/roles.config';
 

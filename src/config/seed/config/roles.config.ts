@@ -21,47 +21,12 @@ export interface RoleConfig {
 }
 
 /**
- * Constante que mapea TODOS los recursos a sus permisos wildcard
- * TypeScript validará en tiempo de compilación que TODOS los recursos del enum están presentes
- * Si falta alguno, aparecerá un error de tipado en rojo en el IDE
- *
- * Esta constante se usa para validar que generateAllAdminPermissions() genera todos los permisos
+ * Constante que mapea los recursos básicos a sus permisos wildcard
+ * Solo incluye los recursos disponibles en el template
  */
 const ALL_RESOURCE_WILDCARD_PERMISSIONS = {
     [ResourceType.user]: `${ResourceType.user}:*`,
     [ResourceType.role]: `${ResourceType.role}:*`,
-    [ResourceType.customer]: `${ResourceType.customer}:*`,
-    [ResourceType.supplier]: `${ResourceType.supplier}:*`,
-    [ResourceType.workshop]: `${ResourceType.workshop}:*`,
-    [ResourceType.worker]: `${ResourceType.worker}:*`,
-    [ResourceType['garment-type']]: `${ResourceType['garment-type']}:*`,
-    [ResourceType['garment-type-image']]: `${ResourceType['garment-type-image']}:*`,
-    [ResourceType['material-type']]: `${ResourceType['material-type']}:*`,
-    [ResourceType.material]: `${ResourceType.material}:*`,
-    [ResourceType.unit]: `${ResourceType.unit}:*`,
-    [ResourceType['labor-type']]: `${ResourceType['labor-type']}:*`,
-    [ResourceType.labor]: `${ResourceType.labor}:*`,
-    [ResourceType.size]: `${ResourceType.size}:*`,
-    [ResourceType['garment-template']]: `${ResourceType['garment-template']}:*`,
-    [ResourceType['garment-template-material']]: `${ResourceType['garment-template-material']}:*`,
-    [ResourceType['garment-template-labor']]: `${ResourceType['garment-template-labor']}:*`,
-    [ResourceType.quotation]: `${ResourceType.quotation}:*`,
-    [ResourceType['quotation-item']]: `${ResourceType['quotation-item']}:*`,
-    [ResourceType['quotation-item-size']]: `${ResourceType['quotation-item-size']}:*`,
-    [ResourceType['purchase-order']]: `${ResourceType['purchase-order']}:*`,
-    [ResourceType.specification]: `${ResourceType.specification}:*`,
-    [ResourceType['production-assignment']]: `${ResourceType['production-assignment']}:*`,
-    [ResourceType['progress-history']]: `${ResourceType['progress-history']}:*`,
-    [ResourceType.payment]: `${ResourceType.payment}:*`,
-    [ResourceType['account-receivable']]: `${ResourceType['account-receivable']}:*`,
-    [ResourceType['account-payable']]: `${ResourceType['account-payable']}:*`,
-    [ResourceType['account-type']]: `${ResourceType['account-type']}:*`,
-    [ResourceType['chart-account']]: `${ResourceType['chart-account']}:*`,
-    [ResourceType.movement]: `${ResourceType.movement}:*`,
-    [ResourceType['audit-log']]: `${ResourceType['audit-log']}:*`,
-    [ResourceType['measurement-control']]: `${ResourceType['measurement-control']}:*`,
-    [ResourceType['period-planning']]: `${ResourceType['period-planning']}:*`,
-    [ResourceType.business]: `${ResourceType.business}:*`,
 } satisfies Record<ResourceType, `${ResourceType}:*`>;
 
 /**
@@ -102,49 +67,11 @@ export const ROLES_CONFIG: RoleConfig[] = [
     {
         name: 'Operador',
         description: 'Operador con permisos limitados para operaciones básicas',
-        isDefault: true,
+        isDefault: false,
         permissions: [
             // Solo lectura de usuarios y roles
             'user:read',
             'role:read',
-            // Clientes - Solo lectura y creación
-            'customer:read',
-            'customer:create',
-            // Proveedores - Solo lectura y creación
-            'supplier:read',
-            'supplier:create',
-            // Talleres - Solo lectura y creación
-            'workshop:read',
-            'workshop:create',
-            // Trabajadores - Solo lectura y creación
-            'worker:read',
-            'worker:create',
-            // Catálogos - Solo lectura
-            'garment-type:read',
-            'material:read',
-            'labor:read',
-            'size:read',
-            // Plantillas - Solo lectura
-            'garment-template:read',
-            // Cotizaciones - Solo lectura y creación
-            'quotation:read',
-            'quotation:create',
-            // Órdenes - Solo lectura
-            'purchase-order:read',
-            // Producción - Solo lectura
-            'production-assignment:read',
-            'progress-history:read',
-            // Pagos - Solo lectura
-            'payment:read',
-            // Finanzas - Solo lectura
-            'account-receivable:read',
-            'account-payable:read',
-            'movement:read',
-            // Planificaciones por período - Solo lectura
-            'period-planning:read',
-            // Control de medidas - Solo lectura y creación
-            'measurement-control:read',
-            'measurement-control:create',
         ],
     },
 ];

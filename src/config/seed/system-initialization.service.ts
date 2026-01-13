@@ -1,15 +1,11 @@
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 import { generalEnvs } from '../env/envs';
 import { ADMIN_CONFIG } from './config/admin.config';
-import { BUSINESS_SEED_CONFIG, IMC_BUSINESS_SEED_CONFIG } from './config/business.config';
 import { PERMISSIONS_CONFIG } from './config/permissions.config';
 import { ROLES_CONFIG } from './config/roles.config';
 import { AdminSeedService } from './services/admin-seed.service';
-import { BusinessSeedService } from './services/business-seed.service';
 import { PermissionSeedService } from './services/permission-seed.service';
 import { RoleSeedService } from './services/role-seed.service';
-import { SizeSeedService } from './services/size-seed.service';
-import { UnitSeedService } from './services/unit-seed.service';
 
 /**
  * Servicio de Inicialización del Sistema
@@ -47,9 +43,6 @@ export class SystemInitializationService implements OnApplicationBootstrap {
         private readonly permissionSeedService: PermissionSeedService,
         private readonly roleSeedService: RoleSeedService,
         private readonly adminSeedService: AdminSeedService,
-        private readonly sizeSeedService: SizeSeedService,
-        private readonly unitSeedService: UnitSeedService,
-        private readonly businessSeedService: BusinessSeedService,
     ) {}
 
     async onApplicationBootstrap(): Promise<void> {
@@ -73,24 +66,8 @@ export class SystemInitializationService implements OnApplicationBootstrap {
             await this.initializeAdminUser();
 
             // =============================================================================
-            // SEEDS ADICIONALES (agregar aquí nuevos seeds)
+            // SEEDS ADICIONALES (agregar aquí nuevos seeds cuando se necesiten)
             // =============================================================================
-
-            // 4. Crear tallas estándar del sistema
-            this.logger.log('📏 Creando tallas estándar del sistema...');
-            await this.sizeSeedService.seedSizes();
-
-            // 5. Crear unidades de medida para el rubro textil
-            this.logger.log('📐 Creando unidades de medida del sistema (rubro textil)...');
-            await this.unitSeedService.seedUnits();
-
-            // 6. Crear empresa principal del sistema
-            this.logger.log('🏢 Creando empresa principal del sistema...');
-            await this.businessSeedService.seedBusiness(BUSINESS_SEED_CONFIG);
-
-            // 7. Crear empresa IMC S.R.L.
-            this.logger.log('🏢 Creando empresa IMC S.R.L....');
-            await this.businessSeedService.seedBusiness(IMC_BUSINESS_SEED_CONFIG);
 
             this.logger.log('✅ Sistema inicializado correctamente');
         } catch (error) {

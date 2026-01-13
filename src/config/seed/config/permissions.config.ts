@@ -15,44 +15,11 @@ export interface PermissionConfig {
 
 /**
  * Mapeo de nombres de recursos a nombres legibles en español
- * TypeScript validará en tiempo de compilación que TODOS los recursos del enum están presentes
- * Si falta alguno, aparecerá un error de tipado en rojo en el IDE
+ * Solo incluye los recursos básicos disponibles en el template
  */
 const RESOURCE_NAMES = {
     [ResourceType.user]: 'usuarios',
     [ResourceType.role]: 'roles',
-    [ResourceType.customer]: 'clientes',
-    [ResourceType.supplier]: 'proveedores',
-    [ResourceType.workshop]: 'talleres',
-    [ResourceType.worker]: 'trabajadores',
-    [ResourceType['garment-type']]: 'tipos de prendas',
-    [ResourceType['garment-type-image']]: 'imágenes de tipos de prendas',
-    [ResourceType['material-type']]: 'tipos de insumo',
-    [ResourceType.material]: 'materiales',
-    [ResourceType.unit]: 'unidades',
-    [ResourceType['labor-type']]: 'tipos de acción',
-    [ResourceType.labor]: 'acciones',
-    [ResourceType.size]: 'tallas',
-    [ResourceType['garment-template']]: 'plantillas de prendas',
-    [ResourceType['garment-template-material']]: 'insumos de plantilla de prenda',
-    [ResourceType['garment-template-labor']]: 'mano de obra de plantilla de prenda',
-    [ResourceType.quotation]: 'cotizaciones',
-    [ResourceType['quotation-item']]: 'ítems de cotización',
-    [ResourceType['quotation-item-size']]: 'distribuciones de talla en items de cotización',
-    [ResourceType['purchase-order']]: 'órdenes de pedido',
-    [ResourceType.specification]: 'especificaciones',
-    [ResourceType['production-assignment']]: 'asignaciones de producción',
-    [ResourceType['progress-history']]: 'historial de progreso',
-    [ResourceType.payment]: 'pagos a trabajadores',
-    [ResourceType['account-receivable']]: 'cuentas por cobrar',
-    [ResourceType['account-payable']]: 'cuentas por pagar',
-    [ResourceType['account-type']]: 'tipos de cuenta',
-    [ResourceType['chart-account']]: 'plan de cuentas',
-    [ResourceType.movement]: 'movimientos contables',
-    [ResourceType['audit-log']]: 'registros de auditoría',
-    [ResourceType['measurement-control']]: 'control de medidas',
-    [ResourceType['period-planning']]: 'planificaciones por período',
-    [ResourceType.business]: 'empresas',
 } satisfies Record<ResourceType, string>;
 
 /**
